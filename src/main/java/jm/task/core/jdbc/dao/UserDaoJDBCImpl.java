@@ -23,8 +23,8 @@ public class UserDaoJDBCImpl implements UserDao {
                 "ENGINE = InnoDB\n" +
                 "DEFAULT CHARACTER SET = utf8;";
 
-        try (Statement statement = Util.getConnection().createStatement()) {
-            statement.execute(sql);
+        try (PreparedStatement preparedStatement = Util.getConnection().prepareStatement(sql)) {
+            preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -32,8 +32,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void dropUsersTable() {
         String sql = "DROP TABLE IF EXISTS user;";
-        try (Statement statement = Util.getConnection().createStatement()) {
-            statement.execute(sql);
+        try (PreparedStatement preparedStatement = Util.getConnection().prepareStatement(sql)) {
+            preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -68,8 +68,8 @@ public class UserDaoJDBCImpl implements UserDao {
         List<User> userList = new ArrayList<>();
 
         String sql = "SELECT * FROM user;";
-        try (Statement statement = Util.getConnection().createStatement()) {
-            ResultSet resultSet = statement.executeQuery(sql);
+        try (PreparedStatement preparedStatement = Util.getConnection().prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 User user = new User();
